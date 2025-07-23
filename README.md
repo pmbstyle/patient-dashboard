@@ -37,7 +37,7 @@ This is a full-stack take-home project designed to showcase modern web developme
 
 ### Prerequisites
 
-You will need [Node.js](httpss://nodejs.org/en) (version 18 or newer recommended) installed on your system.
+You will need [Node.js](httpss://nodejs.org/en) (version 20.12 or newer recommended) installed on your system.
 
 ### Installation & Setup
 
