@@ -79,7 +79,12 @@ defineProps<{
               >
                 <Pencil class="w-4 h-4" />
               </Button>
-              <Button variant="destructive" size="icon" class="cursor-pointer">
+              <Button
+                variant="destructive"
+                size="icon"
+                class="cursor-pointer"
+                @click="$emit('delete-patient', patient.id)"
+              >
                 <Trash2 class="w-4 h-4" />
               </Button>
             </TableCell>

@@ -27,21 +27,16 @@ const handleFormSubmit = async (
   try {
     if (editingPatient.value) {
       await patientStore.updatePatient(editingPatient.value.id, formData)
-      toast({
-        title: 'Success',
+      toast('Success', {
         description: 'Patient updated successfully.',
       })
     } else {
       await patientStore.createPatient(formData)
-      toast({ title: 'Success', description: 'New patient created.' })
+      toast('Success', { description: 'New patient created.' })
     }
     isOpen.value = false
   } catch (error) {
-    toast({
-      variant: 'destructive',
-      title: 'Error',
-      description: 'An error occurred. Please try again.',
-    })
+    toast('Error', { description: 'An error occurred. Please try again.' })
   } finally {
     isSubmitting.value = false
   }

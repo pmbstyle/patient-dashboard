@@ -16,10 +16,6 @@ defineExpose({
     isOpen.value = true
   },
 })
-
-const formatDate = (dateString: string): string => {
-  return new Date(dateString).toLocaleDateString()
-}
 </script>
 
 <template>
@@ -44,7 +40,7 @@ const formatDate = (dateString: string): string => {
               </div>
               <div>
                 <span class="font-medium">Date of Birth:</span>
-                {{ formatDate(viewingPatient.dateOfBirth) }}
+                {{ viewingPatient.dateOfBirth }}
               </div>
             </div>
           </div>

@@ -14,12 +14,25 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { toast } from 'vue-sonner'
 import type { Patient } from '@/types'
 
 const patientStore = usePatientStore()
 
 const dialog = ref<InstanceType<typeof PatientFormDialog> | null>(null)
 const dialogView = ref<InstanceType<typeof PatientViewDialog> | null>(null)
+const isDeleteDialogOpen = ref(false)
+const patientToDeleteId = ref<number | string | null>(null)
 const itemsPerPage = 10
 const currentPage = ref(1)
 
@@ -42,6 +55,28 @@ const paginatedPatients = computed(() => {
   return sortedPatients.slice(startIndex, endIndex)
 })
 
+const openDeleteDialog = (patientId: number | string) => {
+  patientToDeleteId.value = patientId
+  isDeleteDialogOpen.value = true
+}
+
+const confirmDelete = async () => {
+  if (!patientToDeleteId.value) return
+  try {
+    await patientStore.deletePatient(patientToDeleteId.value)
+    toast({ title: 'Success', description: 'Patient deleted successfully.' })
+  } catch (error) {
+    toast({
+      variant: 'destructive',
+      title: 'Error',
+      description: 'Failed to delete patient.',
+    })
+  } finally {
+    isDeleteDialogOpen.value = false
+    patientToDeleteId.value = null
+  }
+}
+
 onMounted(() => {
   patientStore.fetchPatients()
 })
@@ -59,6 +94,7 @@ onMounted(() => {
         :patients="paginatedPatients"
         @edit-patient="openEditDialog"
         @view-patient="openViewDialog"
+        @delete-patient="openDeleteDialog"
       />
       <div class="flex justify-center mt-6">
         <Pagination
@@ -91,5 +127,23 @@ onMounted(() => {
     </main>
     <PatientFormDialog ref="dialog" />
     <PatientViewDialog ref="dialogView" />
+    <AlertDialog
+      :open="isDeleteDialogOpen"
+      @update:open="isDeleteDialogOpen = $event"
+    >
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete the
+            patient record from the server.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction @click="confirmDelete">Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   </div>
 </template>

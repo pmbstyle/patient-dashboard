@@ -58,7 +58,7 @@ const patientStatus: PatientStatus[] = [
 const formSchema = toTypedSchema(
   yup.object({
     firstName: yup.string().required().label('First Name'),
-    middleName: yup.string().optional(),
+    middleName: yup.string().nullable().transform((value) => (value === '' || value === null ? undefined : value)),
     lastName: yup.string().required().label('Last Name'),
     dateOfBirth: yup.date().required().label('Date of Birth'),
     status: yup.string().oneOf(patientStatus).required().label('Status'),
