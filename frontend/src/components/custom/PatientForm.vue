@@ -325,7 +325,7 @@ const formTitle = computed(() =>
         >
           Cancel
         </Button>
-        <Button type="submit" :disabled="isSubmitting" class="cursor-pointer">
+        <Button type="submit" :disabled="isSubmitting" class="cursor-pointer text-white">
           <span v-if="isSubmitting">Saving...</span>
           <span v-else>Save Changes</span>
         </Button>
