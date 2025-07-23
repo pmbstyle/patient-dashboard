@@ -11,14 +11,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Logo from "@/assets/logo.png"
 
 const mode = useColorMode()
 </script>
 
 <template>
   <div class="container mx-auto">
-    <header class="flex items-center justify-between p-6">
-      <h1 class="text-3xl font-bold tracking-tight">Patient Dashboard</h1>
+    <header class="flex items-center justify-between px-4 py-6 sm:px-6 md:px-8">
+      <div class="flex items-center">
+        <img :src="Logo" class="mr-4"/>
+        <h1 class="text-3xl font-bold tracking-tight">Patient Dashboard</h1>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
           <Button variant="outline">
